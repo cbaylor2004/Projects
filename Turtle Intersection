@@ -1,0 +1,226 @@
+import turtle as t
+
+
+from turtle import *
+s = t.Turtle()
+
+wn = t.Screen()
+wn.bgcolor("gray")
+
+verticalTurts = []
+horizontalTurts = []
+
+#creating the road
+def blackOutlines():
+    s.speed(0)
+    s.penup()
+    s.goto(-300,0)
+    s.pendown()
+    s.forward(200)
+    s.penup()
+    s.goto(100,0)
+    s.pendown()
+    s.forward(150)
+    s.penup()
+    s.goto(-300,120)
+    s.pendown()
+    s.forward(200)
+    s.penup()
+    s.goto(100,120)
+    s.pendown()
+    s.forward(200)
+    s.penup()
+    s.goto(-100,250)
+    s.pendown()
+    s.setheading(-90)
+    s.forward(135)
+    s.penup()
+    s.goto(-100,0)
+    s.pendown()
+    s.forward(135)
+    s.penup()
+    s.goto(100,250)
+    s.pendown()
+    s.forward(135)
+    s.penup()
+    s.goto(100,0)
+    s.pendown()
+    s.forward(135)
+    
+    
+def yellowLines():
+    s.color("yellow")
+    s.speed(0)
+    s.penup()
+    s.goto(-300,60)
+    s.pendown()
+    s.setheading(360)
+    s.forward(200)
+    s.penup()
+    s.goto(100,60)
+    s.pendown()
+    s.forward(200)
+    s.penup()
+    s.goto(0,250)
+    s.pendown()
+    s.setheading(-90)
+    s.forward(135)
+    s.penup()
+    s.goto(0,0)
+    s.pendown()
+    s.forward(135)
+    
+def whiteDashes():
+    s.color("white")
+    s.speed(0)
+    s.penup()
+    s.goto(-300,30)
+    s.setheading(0)
+    for i in range(5):
+        s.pendown()
+        s.forward(20)
+        s.penup()
+        s.forward(20)
+    s.penup()
+    s.goto(100,30)
+    for i in range(5):
+        s.pendown()
+        s.forward(20)
+        s.penup()
+        s.forward(20)
+    s.penup()
+    s.goto(-300,90)
+    for i in range(5):
+        s.pendown()
+        s.forward(20)
+        s.penup()
+        s.forward(20)
+    s.penup()
+    s.goto(100,90)
+    for i in range(5):
+        s.pendown()
+        s.forward(20)
+        s.penup()
+        s.forward(20)
+    s.penup()
+    s.goto(50,0)
+    s.setheading(-90)
+    for i in range(4):
+        s.pendown()
+        s.forward(20)
+        s.penup()
+        s.forward(20)
+    s.penup()
+    s.goto(-50,0)
+    for i in range(4):
+        s.pendown()
+        s.forward(20)
+        s.penup()
+        s.forward(20)      
+    s.penup()
+    s.goto(-50,250)  
+    s.setheading(-90)
+    for i in range(4):
+        s.pendown()
+        s.forward(20)
+        s.penup()
+        s.forward(20)    
+    s.penup()
+    s.goto(50,250)
+    for i in range(4):
+        s.pendown()
+        s.forward(20)
+        s.penup()
+        s.forward(20)
+    s.hideturtle()
+
+#running the road functions
+blackOutlines()
+yellowLines()
+whiteDashes()
+
+
+# the turtle shapes and colors 
+turtleShapes = ["arrow", "turtle", "circle", "square"]
+horizColors = ["red", "blue", "green", "orange", "purple", "gold"]
+vertColors = ["darkred", "darkblue", "lime", "salmon", "indigo", "brown"]
+
+#create turtles
+spacing = 50
+for shape in turtleShapes:
+    ht = Turtle(shape=shape)
+    ht.speed(0)
+    horizontalTurts.append(ht)
+    ht.penup()
+    ht.fillcolor(horizColors.pop())
+    # ht.goto(-250,spacing)
+    # ht.setheading(0)
+    
+    vt = Turtle(shape=shape)
+    vt.speed(0)
+    verticalTurts.append(vt)
+    vt.penup()
+    vt.fillcolor(vertColors.pop())
+    # vt.goto(-spacing,250)
+    # vt.setheading(270)
+    
+    # spacing+=25
+#positioning the turtles 
+horizontalTurts[0].goto(-300,10)        #gold triange goes in right direction
+horizontalTurts[1].goto(300,80)
+horizontalTurts[1].setheading(180)
+horizontalTurts[2].goto(-300,40)
+horizontalTurts[3].goto(300,100)
+horizontalTurts[3].setheading(180)
+
+verticalTurts[0].goto(-30,250)
+verticalTurts[0].setheading(270)
+verticalTurts[1].goto(-70,250)
+verticalTurts[1].setheading(270)
+verticalTurts[2].goto(70,-120)
+verticalTurts[2].setheading(90)
+verticalTurts[3].goto(20,-120)
+verticalTurts[3].setheading(90)
+
+#moving the turtles
+while True:  #repeat forever if the turtle doesn't crash with another
+    distanceToMove=2
+    for step in range(75):
+        for h in horizontalTurts:
+            for v in verticalTurts:
+                h.fd(distanceToMove)
+                v.fd(distanceToMove)
+            
+            
+                #check for collision
+                if (abs(h.xcor() - v.xcor()) < 20) and (abs(h.ycor()-v.ycor())<20):
+                    h.fillcolor("red")
+                    h.stamp()
+                    h.penup()
+                    h.goto(1000,1000)                #remove from the list
+                    h.hideturtle() 
+                    v.fillcolor("red")
+                    v.stamp()
+                    v.penup()
+                    v.goto(1000,1000)
+                    v.hideturtle()
+                    v.penup()
+    
+    #reset the turtles to the original location and run it again if it didn't crash 
+    horizontalTurts[0].goto(-300,10)        #gold triange goes in right direction
+    horizontalTurts[1].goto(300,80)
+    horizontalTurts[1].setheading(180)
+    horizontalTurts[2].goto(-300,40)
+    horizontalTurts[3].goto(300,100)
+    horizontalTurts[3].setheading(180)
+
+    verticalTurts[0].goto(-30,250)
+    verticalTurts[0].setheading(270)
+    verticalTurts[1].goto(-70,250)
+    verticalTurts[1].setheading(270)
+    verticalTurts[2].goto(70,-120)
+    verticalTurts[2].setheading(90)
+    verticalTurts[3].goto(20,-120)
+    verticalTurts[3].setheading(90)            
+
+wn.mainloop()
